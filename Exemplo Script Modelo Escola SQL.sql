@@ -2,6 +2,7 @@ create database exemplo;
 
 use exemplo;
 
+-- Cadastro de tabela de aluno
 create table aluno (
 id_aluno int primary key
 );
