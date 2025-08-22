@@ -1,107 +1,113 @@
--- criando o banco de dados solar
-create database if not exists solar;
-use solar;
+-- CRIANDO O BANCO DE DADOS
+CREATE DATABASE IF NOT EXISTS SOLAR;
+USE SOLAR;
 
--- tabela clientes
-create table if not exists clientes (
-    cod_cliente int not null auto_increment,  -- código do cliente
-    nome_cliente varchar(100),                -- nome do cliente
-    cpf varchar(14) not null,                 -- cpf do cliente
-    endereco varchar(100),                    -- endereço do cliente
-    celular varchar(19),                      -- celular do cliente
-    primary key (cod_cliente)                 -- chave primária
+-- TABELA CLIENTES
+CREATE TABLE IF NOT EXISTS CLIENTES (
+    COD_CLIENTE INT NOT NULL AUTO_INCREMENT,   -- CÓDIGO DO CLIENTE
+    NOME_CLIENTE VARCHAR(100),                 -- NOME DO CLIENTE
+    CPF VARCHAR(14) NOT NULL,                  -- CPF DO CLIENTE
+    ENDERECO VARCHAR(100),                     -- ENDEREÇO DO CLIENTE
+    CELULAR VARCHAR(19),                       -- CELULAR DO CLIENTE
+    PRIMARY KEY (COD_CLIENTE)                  -- CHAVE PRIMÁRIA
 );
 
--- tabela fornecedor
-create table if not exists fornecedor (
-    cod_fornecedor int not null auto_increment, -- código do fornecedor
-    nome_fornecedor varchar(100),               -- nome do fornecedor
-    cnpj varchar(18) not null,                  -- cnpj do fornecedor
-    endereco varchar(100),                      -- endereço do fornecedor
-    celular varchar(19),                        -- celular do fornecedor
-    primary key (cod_fornecedor)                -- chave primária
+-- TABELA FORNECEDOR
+CREATE TABLE IF NOT EXISTS FORNECEDOR (
+    COD_FORNECEDOR INT NOT NULL AUTO_INCREMENT, -- CÓDIGO DO FORNECEDOR
+    NOME_FORNECEDOR VARCHAR(100),               -- NOME DO FORNECEDOR
+    CNPJ VARCHAR(18) NOT NULL,                  -- CNPJ DO FORNECEDOR
+    ENDERECO VARCHAR(100),                      -- ENDEREÇO DO FORNECEDOR
+    CELULAR VARCHAR(19),                        -- CELULAR DO FORNECEDOR
+    PRIMARY KEY (COD_FORNECEDOR)                -- CHAVE PRIMÁRIA
 );
 
--- tabela produto
-create table if not exists produto (
-    cod_produto int not null auto_increment,    -- código do produto
-    nome_produto varchar(100),                  -- nome do produto
-    valor decimal(10,2),                        -- valor do produto
-    descricao varchar(100),                      -- descrição do produto
-    quantidade_produto int,                      -- quantidade em estoque
-    cod_fornecedor int not null,                 -- código do fornecedor
-    primary key (cod_produto),                   -- chave primária
-    foreign key (cod_fornecedor) references fornecedor(cod_fornecedor) -- relaciona produto ao fornecedor
+-- TABELA PRODUTO
+CREATE TABLE IF NOT EXISTS PRODUTO (
+    COD_PRODUTO INT NOT NULL AUTO_INCREMENT,    -- CÓDIGO DO PRODUTO
+    NOME_PRODUTO VARCHAR(100),                  -- NOME DO PRODUTO
+    VALOR DECIMAL(10,2),                        -- VALOR DO PRODUTO
+    DESCRICAO VARCHAR(100),                     -- DESCRIÇÃO DO PRODUTO
+    QUANTIDADE_PRODUTO INT,                     -- QUANTIDADE EM ESTOQUE
+    COD_FORNECEDOR INT NOT NULL,                -- CÓDIGO DO FORNECEDOR
+    PRIMARY KEY (COD_PRODUTO),                  -- CHAVE PRIMÁRIA
+    FOREIGN KEY (COD_FORNECEDOR) REFERENCES FORNECEDOR(COD_FORNECEDOR)
 );
 
--- tabela venda
-create table if not exists venda (
-    cod_venda int not null auto_increment,      -- código da venda
-    cod_produto int not null,                   -- produto vendido
-    cod_fornecedor int not null,                -- fornecedor do produto
-    primary key (cod_venda),                    -- chave primária
-    foreign key (cod_produto) references produto(cod_produto),
-    foreign key (cod_fornecedor) references fornecedor(cod_fornecedor)
+-- TABELA VENDA
+CREATE TABLE IF NOT EXISTS VENDA (
+    COD_VENDA INT NOT NULL AUTO_INCREMENT,      -- CÓDIGO DA VENDA
+    COD_PRODUTO INT NOT NULL,                   -- PRODUTO VENDIDO
+    COD_FORNECEDOR INT NOT NULL,                -- FORNECEDOR DO PRODUTO
+    PRIMARY KEY (COD_VENDA),                    -- CHAVE PRIMÁRIA
+    FOREIGN KEY (COD_PRODUTO) REFERENCES PRODUTO(COD_PRODUTO),
+    FOREIGN KEY (COD_FORNECEDOR) REFERENCES FORNECEDOR(COD_FORNECEDOR)
 );
 
--- tabela departamento
-create table if not exists departamento (
-    cod_departamento int not null auto_increment,  -- código do departamento
-    nome_departamento varchar(100) not null,       -- nome do departamento
-    primary key (cod_departamento)                 -- chave primária
+-- TABELA DEPARTAMENTO
+CREATE TABLE IF NOT EXISTS DEPARTAMENTO (
+    COD_DEPARTAMENTO INT NOT NULL AUTO_INCREMENT,  -- CÓDIGO DO DEPARTAMENTO
+    NOME_DEPARTAMENTO VARCHAR(100) NOT NULL,       -- NOME DO DEPARTAMENTO
+    PRIMARY KEY (COD_DEPARTAMENTO)                 -- CHAVE PRIMÁRIA
 );
 
--- tabela funcionarios
-create table if not exists funcionarios (
-    cod_funcionario int not null auto_increment primary key,   -- código do funcionário
-    nome_funcionario varchar(100) not null,                    -- nome do funcionário
-    cargo varchar(100),                                        -- cargo do funcionário
-    cpf_funcionario varchar(14),
-    endereco_funcionario varchar(100),
-    data_nascimento datetime not null,
-    data_admissao datetime not null,
-    data_rescisao datetime not null,
-    salario decimal(10,2),                                     -- salário do funcionário
-    cod_departamento int not null,                              -- código do departamento
-    foreign key (cod_departamento) references departamento(cod_departamento) -- relaciona funcionário ao departamento
+-- TABELA FUNCIONARIOS (original)
+CREATE TABLE IF NOT EXISTS FUNCIONARIOS (
+    COD_FUNCIONARIO INT NOT NULL AUTO_INCREMENT PRIMARY KEY,   -- CÓDIGO DO FUNCIONÁRIO
+    NOME_FUNCIONARIO VARCHAR(100) NOT NULL,                    -- NOME DO FUNCIONÁRIO
+    CARGO VARCHAR(100),                                        -- CARGO DO FUNCIONÁRIO
+    CPF_FUNCIONARIO VARCHAR(14),
+    ENDERECO_FUNCIONARIO VARCHAR(100),
+    DATA_NASCIMENTO DATETIME NOT NULL,
+    DATA_ADMISSAO DATETIME NOT NULL,
+    DATA_RESCISAO DATETIME NOT NULL,
+    SALARIO DECIMAL(10,2),                                     -- SALÁRIO DO FUNCIONÁRIO
+    COD_DEPARTAMENTO INT NOT NULL,                              -- CÓDIGO DO DEPARTAMENTO
+    FOREIGN KEY (COD_DEPARTAMENTO) REFERENCES DEPARTAMENTO(COD_DEPARTAMENTO)
 );
 
--- ---------------------------------------------------------------
--- consultar tabela funcionarios
-select * from funcionarios;
+-- CONSULTAR TABELA FUNCIONARIOS
+SELECT * FROM FUNCIONARIOS;
 
--- alterações em tabelas
+-- ALTERAÇÕES EM TABELAS
 
--- 1️⃣ adiciona coluna sexo
-alter table funcionarios
-add column sexo char(1);
+-- 1️⃣ ADICIONA COLUNA SEXO
+ALTER TABLE FUNCIONARIOS
+ADD COLUMN SEXO CHAR(1);
 
--- 2️⃣ remove coluna sexo
-alter table funcionarios
-drop column sexo;
+-- 2️⃣ REMOVE COLUNA SEXO
+ALTER TABLE FUNCIONARIOS
+DROP COLUMN SEXO;
 
--- 3️⃣ renomeia a tabela para empregado
-alter table funcionarios
-rename to empregado;
+-- 3️⃣ RENOMEIA A TABELA PARA EMPREGADO
+ALTER TABLE FUNCIONARIOS
+RENAME TO EMPREGADO;
 
--- 4️⃣ renomeia a coluna cpf_funcionario para cic_funcionario
-alter table empregado
-change column cpf_funcionario cic_funcionario varchar(18);
+-- 4️⃣ MANTÉM A COLUNA COMO CPF_FUNCIONARIO
+-- (nenhuma alteração de nome necessária)
 
--- 5️⃣ adiciona coluna estado com valor padrão
-alter table empregado
-add column estado char(2) default 'mg';
+-- 5️⃣ ADICIONA COLUNA ESTADO COM VALOR PADRÃO
+ALTER TABLE EMPREGADO
+ADD COLUMN ESTADO CHAR(2) DEFAULT 'MG';
 
+-- -------------------------
+-- OPÇÃO 1: PK SIMPLES (COD_FUNCIONARIO AUTO_INCREMENT) ✅
+-- Mantemos COD_FUNCIONARIO como PK, CPF_FUNCIONARIO apenas NOT NULL
+-- ALTER TABLE EMPREGADO MODIFY CPF_FUNCIONARIO INT NOT NULL;
 
--- --------------------------------------------------------------------------------------
+-- -------------------------
+-- OPÇÃO 2: PK COMPOSTA (remover AUTO_INCREMENT) ⚠️
+-- Se quiser chave composta (COD_FUNCIONARIO, CPF_FUNCIONARIO), faça assim:
+ALTER TABLE EMPREGADO MODIFY COD_FUNCIONARIO INT NOT NULL;
+ALTER TABLE EMPREGADO MODIFY CPF_FUNCIONARIO INT NOT NULL;
+ALTER TABLE EMPREGADO DROP PRIMARY KEY;
+ALTER TABLE EMPREGADO ADD PRIMARY KEY (COD_FUNCIONARIO, CPF_FUNCIONARIO);
 
+-- --------------------------------------------------------------------------------
 
-alter table empregado
-add primary key (cpf_funcionario); -- a tabela já possui uma primary key, isso não vai funcionar
-
--- ao invés faça isso:alter table empregado
-alter table empregado
-drop primary key,
-add primary key (cpf_funcionario);
-
-
+CREATE TABLE TIPO_PRODUTOS (
+    COD_TIPO_PRODUTO INT AUTO_INCREMENT NOT NULL,
+    TIPO_PRODUTO VARCHAR(225) NOT NULL,
+    PRIMARY KEY (COD_TIPO_PRODUTO),
+    INDEX IDX_TIPO_PRODUTO (TIPO_PRODUTO)
+);
