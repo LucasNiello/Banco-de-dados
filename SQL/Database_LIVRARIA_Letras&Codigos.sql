@@ -1,6 +1,3 @@
-Análise e Correção do Script SQL com Comentários de Estudo
-Este é o script completo e correto que você deve usar no seu MySQL. Ele corrige todos os problemas mencionados anteriormente e segue o modelo de dados que definimos, agora com comentários detalhados para facilitar o aprendizado.
-
 -- Geração de Modelo Físico - MySQL
 
 -- Passo 1: Criar e selecionar o banco de dados com um nome válido
