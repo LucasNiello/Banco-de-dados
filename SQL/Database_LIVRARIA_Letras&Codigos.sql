@@ -1,158 +1,191 @@
--- Geração de Modelo Físico - MySQL
+-- GERAÇÃO DE MODELO FÍSICO - MYSQL
 
--- Passo 1: Criar e selecionar o banco de dados com um nome válido
-CREATE DATABASE IF NOT EXISTS Livraria_Letras_E_Codigos; -- Cria o banco de dados, mas apenas se ele ainda não existir.
-USE Livraria_Letras_E_Codigos; -- Seleciona o banco de dados para que todos os comandos seguintes sejam executados nele.
+-- PASSO 1: CRIAR E SELECIONAR O BANCO DE DADOS COM UM NOME VÁLIDO
+CREATE DATABASE IF NOT EXISTS LIVRARIA_LETRAS_E_CODIGOS; -- CRIA O BANCO DE DADOS, MAS APENAS SE ELE AINDA NÃO EXISTIR.
+USE LIVRARIA_LETRAS_E_CODIGOS; -- SELECIONA O BANCO DE DADOS PARA QUE TODOS OS COMANDOS SEGUINTES SEJAM EXECUTADOS NELE.
 
--- Passo 2: Criar as tabelas com os tipos de dados e relacionamentos corretos
+-- PASSO 2: CRIAR AS TABELAS COM OS TIPOS DE DADOS E RELACIONAMENTOS CORRETOS
 
--- Tabela de Autores
-CREATE TABLE Autores (
-    id_autor INT PRIMARY KEY AUTO_INCREMENT, -- Chave primária: identificador único que se auto-incrementa a cada novo autor.
-    nome VARCHAR(100) NOT NULL, -- NOT NULL significa que este campo é de preenchimento obrigatório.
-    nacionalidade VARCHAR(50),
-    data_nascimento DATE -- Tipo de dado específico para armazenar datas no formato 'AAAA-MM-DD'.
+-- TABELA DE AUTORES
+CREATE TABLE AUTORES (
+    ID_AUTOR INT PRIMARY KEY AUTO_INCREMENT, -- CHAVE PRIMÁRIA: IDENTIFICADOR ÚNICO QUE SE AUTO-INCREMENTA A CADA NOVO AUTOR.
+    NOME VARCHAR(100) NOT NULL, -- NOT NULL SIGNIFICA QUE ESTE CAMPO É DE PREENCHIMENTO OBRIGATÓRIO.
+    NACIONALIDADE VARCHAR(50),
+    DATA_NASCIMENTO DATE -- TIPO DE DADO ESPECÍFICO PARA ARMAZENAR DATAS NO FORMATO 'AAAA-MM-DD'.
 );
 
--- Tabela de Editoras
-CREATE TABLE Editoras (
-    id_editora INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL UNIQUE, -- UNIQUE garante que não haverá duas editoras com o mesmo nome.
-    cnpj VARCHAR(18) UNIQUE,
-    endereco VARCHAR(255),
-    cidade VARCHAR(100),
-    contato_nome VARCHAR(100),
-    telefone VARCHAR(20)
+-- TABELA DE EDITORAS
+CREATE TABLE EDITORAS (
+    ID_EDITORA INT PRIMARY KEY AUTO_INCREMENT,
+    NOME VARCHAR(100) NOT NULL UNIQUE, -- UNIQUE GARANTE QUE NÃO HAVERÁ DUAS EDITORAS COM O MESMO NOME.
+    CNPJ VARCHAR(18) UNIQUE,
+    ENDERECO VARCHAR(255),
+    CIDADE VARCHAR(100),
+    CONTATO_NOME VARCHAR(100),
+    TELEFONE VARCHAR(20)
 );
 
--- Tabela de Clientes
-CREATE TABLE Clientes (
-    id_cliente INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL,
-    cpf VARCHAR(14) NOT NULL UNIQUE, -- CPF também deve ser único para cada cliente.
-    email VARCHAR(100) UNIQUE,
-    telefone VARCHAR(20),
-    data_nascimento DATE
+-- TABELA DE CLIENTES
+CREATE TABLE CLIENTES (
+    ID_CLIENTE INT PRIMARY KEY AUTO_INCREMENT,
+    NOME VARCHAR(100) NOT NULL,
+    CPF VARCHAR(14) NOT NULL UNIQUE, -- CPF TAMBÉM DEVE SER ÚNICO PARA CADA CLIENTE.
+    EMAIL VARCHAR(100) UNIQUE,
+    TELEFONE VARCHAR(20),
+    DATA_NASCIMENTO DATE
 );
 
--- Tabela de Livros (com as chaves estrangeiras para Autores e Editoras)
-CREATE TABLE Livros (
-    id_livro INT PRIMARY KEY AUTO_INCREMENT,
-    titulo VARCHAR(255) NOT NULL,
-    id_autor_fk INT NOT NULL, -- Esta será a chave estrangeira que liga o livro ao seu autor.
-    id_editora_fk INT NOT NULL, -- Esta será a chave estrangeira que liga o livro à sua editora.
-    genero VARCHAR(50),
-    preco DECIMAL(10, 2) NOT NULL, -- DECIMAL é o tipo ideal para dinheiro, com 10 dígitos no total e 2 após a vírgula.
-    quantidade_estoque INT NOT NULL,
-    FOREIGN KEY (id_autor_fk) REFERENCES Autores(id_autor), -- Cria o relacionamento: id_autor_fk desta tabela referencia id_autor da tabela Autores.
-    FOREIGN KEY (id_editora_fk) REFERENCES Editoras(id_editora) -- Cria o relacionamento com a tabela Editoras.
+-- TABELA DE LIVROS (COM AS CHAVES ESTRANGEIRAS PARA AUTORES E EDITORAS)
+CREATE TABLE LIVROS (
+    ID_LIVRO INT PRIMARY KEY AUTO_INCREMENT,
+    TITULO VARCHAR(255) NOT NULL,
+    ID_AUTOR_FK INT NOT NULL, -- ESTA SERÁ A CHAVE ESTRANGEIRA QUE LIGA O LIVRO AO SEU AUTOR.
+    ID_EDITORA_FK INT NOT NULL, -- ESTA SERÁ A CHAVE ESTRANGEIRA QUE LIGA O LIVRO À SUA EDITORA.
+    GENERO VARCHAR(50),
+    PRECO DECIMAL(10, 2) NOT NULL, -- DECIMAL É O TIPO IDEAL PARA DINHEIRO, COM 10 DÍGITOS NO TOTAL E 2 APÓS A VÍRGULA.
+    QUANTIDADE_ESTOQUE INT NOT NULL,
+    DATA_PUBLICACAO DATE, -- ADICIONADO PARA ARMAZENAR A DATA DE PUBLICAÇÃO DO LIVRO.
+    FOREIGN KEY (ID_AUTOR_FK) REFERENCES AUTORES(ID_AUTOR), -- CRIA O RELACIONAMENTO: ID_AUTOR_FK DESTA TABELA REFERENCIA ID_AUTOR DA TABELA AUTORES.
+    FOREIGN KEY (ID_EDITORA_FK) REFERENCES EDITORAS(ID_EDITORA) -- CRIA O RELACIONAMENTO COM A TABELA EDITORAS.
 );
 
--- Tabela de Vendas (com a chave estrangeira para Clientes)
-CREATE TABLE Vendas (
-    id_venda INT PRIMARY KEY AUTO_INCREMENT,
-    id_cliente_fk INT NOT NULL,
-    data_venda TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- TIMESTAMP armazena data e hora. DEFAULT preenche automaticamente com o momento da criação.
-    valor_total DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (id_cliente_fk) REFERENCES Clientes(id_cliente) -- Liga a venda ao cliente que a realizou.
+-- TABELA DE VENDAS (COM A CHAVE ESTRANGEIRA PARA CLIENTES)
+CREATE TABLE VENDAS (
+    ID_VENDA INT PRIMARY KEY AUTO_INCREMENT,
+    ID_CLIENTE_FK INT NOT NULL,
+    DATA_VENDA TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- TIMESTAMP ARMAZENA DATA E HORA. DEFAULT PREENCHA AUTOMATICAMENTE COM O MOMENTO DA CRIAÇÃO.
+    VALOR_TOTAL DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (ID_CLIENTE_FK) REFERENCES CLIENTES(ID_CLIENTE) -- LIGA A VENDA AO CLIENTE QUE A REALIZOU.
 );
 
--- Tabela de Itens da Venda (tabela associativa que detalha os produtos de uma venda)
-CREATE TABLE ItensVenda (
-    id_item_venda INT PRIMARY KEY AUTO_INCREMENT,
-    id_venda_fk INT NOT NULL, -- Chave estrangeira que aponta para a venda específica.
-    id_livro_fk INT NOT NULL, -- Chave estrangeira que aponta para o livro vendido.
-    quantidade INT NOT NULL,
-    preco_unitario DECIMAL(10, 2) NOT NULL, -- Guarda o preço do livro no momento da venda, para histórico.
-    FOREIGN KEY (id_venda_fk) REFERENCES Vendas(id_venda),
-    FOREIGN KEY (id_livro_fk) REFERENCES Livros(id_livro)
+-- TABELA DE ITENS DA VENDA (TABELA ASSOCIATIVA QUE DETALHA OS PRODUTOS DE UMA VENDA)
+CREATE TABLE ITENSVENDA (
+    ID_ITEM_VENDA INT PRIMARY KEY AUTO_INCREMENT,
+    ID_VENDA_FK INT NOT NULL, -- CHAVE ESTRANGEIRA QUE APONTA PARA A VENDA ESPECÍFICA.
+    ID_LIVRO_FK INT NOT NULL, -- CHAVE ESTRANGEIRA QUE APONTA PARA O LIVRO VENDIDO.
+    QUANTIDADE INT NOT NULL,
+    PRECO_UNITARIO DECIMAL(10, 2) NOT NULL, -- GUARDA O PREÇO DO LIVRO NO MOMENTO DA VENDA, PARA HISTÓRICO.
+    FOREIGN KEY (ID_VENDA_FK) REFERENCES VENDAS(ID_VENDA),
+    FOREIGN KEY (ID_LIVRO_FK) REFERENCES LIVROS(ID_LIVRO)
 );
 
+-- PASSO 3: COMANDOS DE MANIPULAÇÃO DE DADOS (DML) E CONSULTA (DQL)
 
--- Passo 3: Comandos de manipulação de dados (DML) e consulta (DQL)
+-- INSERINDO DADOS INICIAIS (POPULAÇÃO DO BANCO)
+INSERT INTO AUTORES (NOME, NACIONALIDADE, DATA_NASCIMENTO) VALUES
+('MACHADO DE ASSIS', 'BRASILEIRO', '1839-06-21'),
+('J.K. ROWLING', 'BRITÂNICA', '1965-07-31'),
+('GEORGE ORWELL', 'BRITÂNICO', '1903-06-25');
 
--- Inserindo dados iniciais (População do Banco)
-INSERT INTO Autores (nome, nacionalidade, data_nascimento) VALUES
-('Machado de Assis', 'Brasileiro', '1839-06-21'),
-('J.K. Rowling', 'Britânica', '1965-07-31'),
-('George Orwell', 'Britânico', '1903-06-25');
+INSERT INTO EDITORAS (NOME, CNPJ, ENDERECO, CIDADE, CONTATO_NOME, TELEFONE) VALUES
+('ROCCO', '12.345.678/0001-99', 'RUA DOS BOBOS, 0', 'RIO DE JANEIRO', 'CARLOS', '21-9999-8888'),
+('COMPANHIA DAS LETRAS', '98.765.432/0001-11', 'AV. PAULISTA, 2073', 'SÃO PAULO', 'ANA', '11-8888-7777');
 
-INSERT INTO Editoras (nome, cnpj, endereco, cidade, contato_nome, telefone) VALUES
-('Rocco', '12.345.678/0001-99', 'Rua dos Bobos, 0', 'Rio de Janeiro', 'Carlos', '21-9999-8888'),
-('Companhia das Letras', '98.765.432/0001-11', 'Av. Paulista, 2073', 'São Paulo', 'Ana', '11-8888-7777');
+INSERT INTO CLIENTES (NOME, CPF, EMAIL, TELEFONE, DATA_NASCIMENTO) VALUES
+('JOÃO SILVA', '111.222.333-44', 'JOAO.SILVA@EMAIL.COM', '11-1234-5678', '1990-05-15'),
+('MARIA OLIVEIRA', '555.666.777-88', 'MARIA.O@EMAIL.COM', '21-9876-5432', '1985-11-20');
 
-INSERT INTO Clientes (nome, cpf, email, telefone, data_nascimento) VALUES
-('João Silva', '111.222.333-44', 'joao.silva@email.com', '11-1234-5678', '1990-05-15'),
-('Maria Oliveira', '555.666.777-88', 'maria.o@email.com', '21-9876-5432', '1985-11-20');
+-- NOTE QUE OS NÚMEROS '1', '2', '3' EM ID_AUTOR_FK CORRESPONDEM AOS IDS DOS AUTORES INSERIDOS ACIMA.
+INSERT INTO LIVROS (TITULO, ID_AUTOR_FK, ID_EDITORA_FK, GENERO, PRECO, QUANTIDADE_ESTOQUE) VALUES
+('DOM CASMURRO', 1, 2, 'ROMANCE', 45.50, 50),
+('HARRY POTTER E A PEDRA FILOSOFAL', 2, 1, 'FANTASIA', 59.90, 100),
+('1984', 3, 2, 'FICÇÃO CIENTÍFICA', 52.00, 30);
 
--- Note que os números '1', '2', '3' em id_autor_fk correspondem aos IDs dos autores inseridos acima.
-INSERT INTO Livros (titulo, id_autor_fk, id_editora_fk, genero, preco, quantidade_estoque) VALUES
-('Dom Casmurro', 1, 2, 'Romance', 45.50, 50),
-('Harry Potter e a Pedra Filosofal', 2, 1, 'Fantasia', 59.90, 100),
-('1984', 3, 2, 'Ficção Científica', 52.00, 30);
-
--- Consultas (Read)
--- Consultar todos os livros com nome do autor e editora
+-- CONSULTAS (READ)
+-- CONSULTAR TODOS OS LIVROS COM NOME DO AUTOR E EDITORA
 SELECT
-    l.titulo, -- Seleciona a coluna 'titulo' da tabela Livros
-    l.preco,
-    a.nome AS autor, -- Seleciona a coluna 'nome' da tabela Autores e a renomeia para 'autor' no resultado.
-    e.nome AS editora
-FROM Livros l -- Define 'l' como um apelido para a tabela Livros, para facilitar a escrita.
-INNER JOIN Autores a ON l.id_autor_fk = a.id_autor -- Junta com a tabela Autores onde a chave estrangeira e primária se correspondem.
-INNER JOIN Editoras e ON l.id_editora_fk = e.id_editora; -- Faz o mesmo para a tabela Editoras.
+    L.TITULO, -- SELECIONA A COLUNA 'TITULO' DA TABELA LIVROS
+    L.PRECO,
+    A.NOME AS AUTOR, -- SELECIONA A COLUNA 'NOME' DA TABELA AUTORES E A RENOMEIA PARA 'AUTOR' NO RESULTADO.
+    E.NOME AS EDITORA
+FROM LIVROS L -- DEFINE 'L' COMO UM APELIDO PARA A TABELA LIVROS, PARA FACILITAR A ESCRITA.
+INNER JOIN AUTORES A ON L.ID_AUTOR_FK = A.ID_AUTOR -- JUNTA COM A TABELA AUTORES ONDE A CHAVE ESTRANGEIRA E PRIMÁRIA SE CORRESPONDEM.
+INNER JOIN EDITORAS E ON L.ID_EDITORA_FK = E.ID_EDITORA; -- FAZ O MESMO PARA A TABELA EDITORAS.
 
--- Consultar livros com estoque baixo (menos de 40 unidades)
-SELECT titulo, quantidade_estoque FROM Livros WHERE quantidade_estoque < 40; -- A cláusula WHERE filtra os resultados.
+-- CONSULTAR LIVROS COM ESTOQUE BAIXO (MENOS DE 40 UNIDADES)
+SELECT TITULO, QUANTIDADE_ESTOQUE FROM LIVROS WHERE QUANTIDADE_ESTOQUE < 40; -- A CLÁUSULA WHERE FILTRA OS RESULTADOS.
 
--- Atualização (Update)
--- Atualizar o preço de um livro específico
-UPDATE Livros -- Indica qual tabela será atualizada.
-SET preco = 49.90 -- Define o novo valor para a coluna 'preco'.
-WHERE id_livro = 1; -- Cláusula OBRIGATÓRIA para especificar QUAL registro será alterado.
+-- ATUALIZAÇÃO (UPDATE)
+-- ATUALIZAR O PREÇO DE UM LIVRO ESPECÍFICO
+UPDATE LIVROS -- INDICA QUAL TABELA SERÁ ATUALIZADA.
+SET PRECO = 49.90 -- DEFINE O NOVO VALOR PARA A COLUNA 'PRECO'.
+WHERE ID_LIVRO = 1; -- CLÁUSULA OBRIGATÓRIA PARA ESPECIFICAR QUAL REGISTRO SERÁ ALTERADO.
 
--- Simulação de Operações da Livraria
--- Cadastro de um novo autor (resultará no id_autor = 4)
-INSERT INTO Autores (nome, nacionalidade, data_nascimento) VALUES ('Clarice Lispector', 'Ucraniana-Brasileira', '1920-12-10');
+-- SIMULAÇÃO DE OPERAÇÕES DA LIVRARIA
+-- CADASTRO DE UM NOVO AUTOR (RESULTARÁ NO ID_AUTOR = 4)
+INSERT INTO AUTORES (NOME, NACIONALIDADE, DATA_NASCIMENTO) VALUES ('CLARICE LISPECTOR', 'UCRANIANA-BRASILEIRA', '1920-12-10');
 
--- Cadastro de um novo livro usando o ID do novo autor
-INSERT INTO Livros (titulo, id_autor_fk, id_editora_fk, genero, preco, quantidade_estoque) VALUES
-('A Hora da Estrela', 4, 2, 'Romance', 38.00, 60);
+-- CADASTRO DE UM NOVO LIVRO USANDO O ID DO NOVO AUTOR
+INSERT INTO LIVROS (TITULO, ID_AUTOR_FK, ID_EDITORA_FK, GENERO, PRECO, QUANTIDADE_ESTOQUE) VALUES
+('A HORA DA ESTRELA', 4, 2, 'ROMANCE', 38.00, 60);
 
--- Registro de uma Venda
--- Simulando uma venda para o cliente 'João Silva' (id 1) comprando
--- 1 'Dom Casmurro' (id 1, preço 49.90) e 2 '1984' (id 3, preço 52.00)
+-- REGISTRO DE UMA VENDA
+-- SIMULANDO UMA VENDA PARA O CLIENTE 'JOÃO SILVA' (ID 1) COMPRANDO
+-- 1 'DOM CASMURRO' (ID 1, PREÇO 49.90) E 2 '1984' (ID 3, PREÇO 52.00)
 
--- Passo A: Inserir a venda com o valor total calculado (1*49.90 + 2*52.00 = 153.90)
-INSERT INTO Vendas (id_cliente_fk, valor_total) VALUES (1, 153.90);
+-- PASSO A: INSERIR A VENDA COM O VALOR TOTAL CALCULADO (1*49.90 + 2*52.00 = 153.90)
+INSERT INTO VENDAS (ID_CLIENTE_FK, VALOR_TOTAL) VALUES (1, 153.90);
 
--- Passo B: Pegar o ID da venda que acabamos de criar para usar na tabela de itens
-SET @id_ultima_venda = LAST_INSERT_ID(); -- Função do MySQL que recupera o último ID gerado por AUTO_INCREMENT.
+-- PASSO B: PEGAR O ID DA VENDA QUE ACABAMOS DE CRIAR PARA USAR NA TABELA DE ITENS
+SET @ID_ULTIMA_VENDA = LAST_INSERT_ID(); -- FUNÇÃO DO MYSQL QUE RECUPERA O ÚLTIMO ID GERADO POR AUTO_INCREMENT.
 
--- Passo C: Inserir os itens na tabela ItensVenda, ligando-os ao ID da venda
-INSERT INTO ItensVenda (id_venda_fk, id_livro_fk, quantidade, preco_unitario) VALUES
-(@id_ultima_venda, 1, 1, 49.90),
-(@id_ultima_venda, 3, 2, 52.00);
+-- PASSO C: INSERIR OS ITENS NA TABELA ITENSVENDA, LIGANDO-OS AO ID DA VENDA
+INSERT INTO ITENSVENDA (ID_VENDA_FK, ID_LIVRO_FK, QUANTIDADE, PRECO_UNITARIO) VALUES
+(@ID_ULTIMA_VENDA, 1, 1, 49.90),
+(@ID_ULTIMA_VENDA, 3, 2, 52.00);
 
--- Passo D: Atualizar o estoque dos livros vendidos
-UPDATE Livros SET quantidade_estoque = quantidade_estoque - 1 WHERE id_livro = 1;
-UPDATE Livros SET quantidade_estoque = quantidade_estoque - 2 WHERE id_livro = 3;
+-- PASSO D: ATUALIZAR O ESTOQUE DOS LIVROS VENDIDOS
+UPDATE LIVROS SET QUANTIDADE_ESTOQUE = QUANTIDADE_ESTOQUE - 1 WHERE ID_LIVRO = 1;
+UPDATE LIVROS SET QUANTIDADE_ESTOQUE = QUANTIDADE_ESTOQUE - 2 WHERE ID_LIVRO = 3;
 
--- Relatórios
--- Relatório de Livros mais vendidos
+-- RELATÓRIOS
+-- RELATÓRIO DE LIVROS MAIS VENDIDOS
 SELECT
-    l.titulo,
-    SUM(iv.quantidade) AS total_vendido -- SUM() é uma função de agregação que soma todos os valores de 'quantidade'.
-FROM ItensVenda iv
-INNER JOIN Livros l ON iv.id_livro_fk = l.id_livro
-GROUP BY l.titulo -- Agrupa as linhas por título para que o SUM() some as quantidades por livro.
-ORDER BY total_vendido DESC; -- Ordena o resultado do maior para o menor total vendido.
+    L.TITULO,
+    SUM(IV.QUANTIDADE) AS TOTAL_VENDIDO -- SUM() É UMA FUNÇÃO DE AGREGAÇÃO QUE SOMA TODOS OS VALORES DE 'QUANTIDADE'.
+FROM ITENSVENDA IV
+INNER JOIN LIVROS L ON IV.ID_LIVRO_FK = L.ID_LIVRO
+GROUP BY L.TITULO -- AGRUPA AS LINHAS POR TÍTULO PARA QUE O SUM() SOME AS QUANTIDADES POR LIVRO.
+ORDER BY TOTAL_VENDIDO DESC; -- ORDENA O RESULTADO DO MAIOR PARA O MENOR TOTAL VENDIDO.
 
--- Relatório de Clientes ativos (que já fizeram compras)
-SELECT DISTINCT -- DISTINCT garante que cada cliente apareça apenas uma vez, mesmo que tenha feito várias compras.
-    c.nome,
-    c.email,
-    c.telefone
-FROM Clientes c
-INNER JOIN Vendas v ON c.id_cliente = v.id_cliente_fk;
+-- RELATÓRIO DE CLIENTES ATIVOS (QUE JÁ FIZERAM COMPRAS)
+SELECT DISTINCT -- DISTINCT GARANTE QUE CADA CLIENTE APAREÇA APENAS UMA VEZ, MESMO QUE TENHA FEITO VÁRIAS COMPRAS.
+    C.NOME,
+    C.EMAIL,
+    C.TELEFONE
+FROM CLIENTES C
+INNER JOIN VENDAS V ON C.ID_CLIENTE = V.ID_CLIENTE_FK;
+
+--  ===========================================================================================
+-- ATUALIZAÇÃO DE DATA DE PUBLICAÇÃO
+UPDATE LIVROS SET DATA_PUBLICACAO = '1899-01-01' WHERE ID_LIVRO = 1;
+UPDATE LIVROS SET DATA_PUBLICACAO = '1997-06-26' WHERE ID_LIVRO = 2;
+UPDATE LIVROS SET DATA_PUBLICACAO = '1949-06-08' WHERE ID_LIVRO = 3;
+UPDATE LIVROS SET DATA_PUBLICACAO = '1977-10-01' WHERE ID_LIVRO = 4;
+-- =============================================================================================
+-- CONSULTA POR TÍTULO CONTENDO 'A' E ANO DE PUBLICAÇÃO MAIOR QUE 2025
+SELECT TITULO, PRECO, DATA_PUBLICACAO
+FROM LIVROS
+WHERE TITULO LIKE '%A%'
+    AND YEAR(DATA_PUBLICACAO) > 2025;
+
+-- LIMITAR CONSULTA DE LIVROS (RETORNA ATÉ 5 REGISTROS)
+SELECT TITULO
+FROM LIVROS
+LIMIT 5;
+
+-- CONSULTA COM ALIAS CORRETOS
+SELECT TITULO AS NOME, YEAR(DATA_PUBLICACAO) AS ANO
+FROM LIVROS;
+
+-- CONSULTA COM JOIN ENTRE LIVROS E AUTORES
+SELECT L.TITULO, A.NOME AS AUTOR
+FROM LIVROS L
+INNER JOIN AUTORES A ON L.ID_AUTOR_FK = A.ID_AUTOR;
+
+-- CONSULTA DE AGRUPAMENTO POR TÍTULO
+SELECT TITULO, COUNT(*) AS QUANTIDADE
+FROM LIVROS
+GROUP BY TITULO;
+
 
