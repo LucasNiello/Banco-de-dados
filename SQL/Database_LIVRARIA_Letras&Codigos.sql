@@ -155,3 +155,4 @@ SELECT DISTINCT -- DISTINCT garante que cada cliente apareça apenas uma vez, me
     c.telefone
 FROM Clientes c
 INNER JOIN Vendas v ON c.id_cliente = v.id_cliente_fk;
+
