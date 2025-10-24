@@ -165,3 +165,23 @@ SELECT
 FROM cliente c
 INNER JOIN venda v ON c.CODCLI = v.CODCLI
 GROUP BY c.NOME;
+
+--  6. Listagem de clientes e duplicatas vencidas antes de 31/12/2003 --
+SELECT 
+    c.NOME AS CLIENTE, 
+    COUNT(v.DUPLIC) AS VENCIDOS
+FROM cliente c
+JOIN venda v ON c.CODCLI = v.CODCLI
+WHERE v.VENCTO < '2003-12-31'
+GROUP BY c.NOME;
+
+-- 7. Duplicatas em atraso antes de 31/12/1999, com juros e valor total --
+SELECT 
+    c.NOME AS CLIENTE,
+    v.VALOR AS VALOR_DUPLICATA,
+    v.VALOR * 0.10 AS JUROS,
+    v.VALOR * 1.10 AS TOTAL
+FROM cliente c
+JOIN venda v ON c.CODCLI = v.CODCLI
+WHERE v.VENCTO < '1999-12-31'
+ORDER BY c.NOME;
