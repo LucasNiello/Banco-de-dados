@@ -188,10 +188,22 @@ UPDATE LIVROS SET QUANTIDADE_ESTOQUE = QUANTIDADE_ESTOQUE - 2 WHERE ID_LIVRO = 3
 
 
 -- =========================================
+-- 31-10-2025
+
+USE LIVRARIA_LETRAS_E_CODIGOS; 
+
+CREATE TABLE USUARIOS (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    NOME VARCHAR(100) NOT NULL,
+    EMAIL VARCHAR(100) NOT NULL
+);
 
 
 -- Se estiver tudo certo:
-COMMIT;
+-- COMMIT;
 
 -- Se quiser desfazer:
 -- ROLLBACK;
+
+
+
