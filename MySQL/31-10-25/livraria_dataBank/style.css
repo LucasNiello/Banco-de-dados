@@ -1,0 +1,185 @@
+/* ===== style.css ===== */
+
+/* Reset e base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f4f8;
+}
+
+/* Container do formulário */
+form {
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Labels e inputs */
+label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Botão */
+button {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* style.css (sugestão) */
+.button2 {
+  margin-top: 10px; /* Adiciona espaço acima */
+  background-color: #6c757d; /* Um cinza para diferenciar */
+}
+
+.button2:hover {
+  background-color: #5a6268;
+}
+
+/* ===== ARQUIVO: style.css (Adições e Correções) ===== */
+
+/* * CORREÇÃO:
+ * 1. Removemos 'width: 100%' da regra 'button' original.
+ * 2. Adicionamos 'padding: 10px 20px' para botões de largura automática.
+*/
+button {
+  /* width: 100%; */ /* <-- REMOVA ESTA LINHA DA REGRA ORIGINAL */
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px; /* <-- ADICIONE/AJUSTE O PADDING */
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+/* * NOVO:
+ * 3. Aplicamos a largura total apenas aos botões dentro do formulário.
+*/
+form button {
+  width: 100%;
+}
+/* Se você usou a sugestão do .btn-secundario, mantenha-a aqui */
+.btn-secundario {
+  margin-top: 10px; 
+  background-color: #6c757d; 
+}
+.btn-secundario:hover {
+  background-color: #5a6268;
+}
+
+
+/* * ========================================
+ * NOVOS ESTILOS PARA A PÁGINA LISTAR.PHP
+ * ========================================
+*/
+
+/* Container para a lista (similar ao <form>) */
+.container-lista {
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px; /* Um pouco mais largo para a tabela */
+  text-align: center; /* Centraliza o H2 e o botão */
+}
+
+/* Título da lista */
+h2 {
+  color: #333;
+  margin-bottom: 25px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Estilos da Tabela */
+table {
+  width: 100%; /* Tabela ocupa toda a largura do container */
+  border-collapse: collapse; /* Remove espaço entre bordas */
+  margin-bottom: 25px;
+  text-align: left; /* Alinha texto da tabela à esquerda */
+}
+
+th, td {
+  border: 1px solid #ddd; /* Borda cinza clara */
+  padding: 12px 15px; /* Espaçamento interno */
+}
+
+/* Cabeçalho da tabela */
+th {
+  background-color: #f4f6f8; /* Fundo levemente cinza */
+  font-weight: 600;
+  color: #333;
+}
+
+/* Linhas alternadas (zebradas) */
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Links de Ação (Editar/Excluir) */
+td a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0 5px;
+}
+
+td a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* Define o estilo para as CÉLULAS da coluna "Ações" */
+td:last-child {
+    /* Esta é a regra principal: impede a quebra de linha */
+    white-space: nowrap; 
+    
+    /* Opcional: centraliza os links "Editar | Excluir" */
+    text-align: center; 
+}
